@@ -1,0 +1,207 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>QR for M.Abinaya</title>
+    <style>
+      :root { 
+        --bg: #f6f7fb; 
+        --card: #ffffff; 
+        --text: #1f2937; 
+        --muted: #6b7280; 
+        --accent: #10b981;
+        --border: #e5e7eb;
+      }
+      * { 
+        box-sizing: border-box; 
+        font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+      }
+      body { 
+        margin: 0; 
+        background: var(--bg); 
+        color: var(--text); 
+        padding: 20px;
+      }
+      .wrap { 
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 16px; 
+      }
+      .card { 
+        background: var(--card); 
+        border-radius: 12px; 
+        padding: 24px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+        border: 1px solid var(--border);
+      }
+      .btn { 
+        display: inline-block; 
+        padding: 12px 24px; 
+        border-radius: 8px; 
+        background: var(--accent); 
+        color: #fff; 
+        border: 0; 
+        font-weight: 600; 
+        cursor: pointer; 
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+      .btn:hover { 
+        background: #059669;
+        transform: translateY(-1px);
+      }
+      .btn:active { 
+        transform: translateY(0px); 
+      }
+      h3 { 
+        margin: 20px 0 16px 0; 
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 24px;
+        margin: 16px 0;
+      }
+      .info-row { 
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .label { 
+        font-weight: 600; 
+        font-size: 14px;
+        color: var(--text);
+      }
+      .value {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .muted { 
+        color: var(--muted); 
+      }
+      .qr-section { 
+        margin-top: 24px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 260px;
+        background: #fafafa;
+        border-radius: 8px;
+        border: 2px dashed var(--border);
+      }
+      .qr img { 
+        width: 220px; 
+        height: 220px; 
+        image-rendering: pixelated; 
+        border-radius: 8px;
+        background: white;
+        padding: 8px;
+      }
+      .topbar { 
+        display: flex; 
+        justify-content: center; 
+        margin-bottom: 8px;
+      }
+      .divider { 
+        height: 1px; 
+        background: var(--border); 
+        margin: 20px 0; 
+      }
+      .footer { 
+        text-align: center; 
+        font-size: 12px; 
+        color: var(--muted); 
+        margin-top: 16px; 
+      }
+      .placeholder-text {
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 300px;
+      }
+      @media (max-width: 600px) {
+        .info-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .card {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="topbar">
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn" type="submit">Generate QR Code</button>
+          </form>
+        </div>
+        
+        <div style="text-align: center; margin: 16px 0;">
+          <a href="/scanner/" style="color: #10b981; text-decoration: none; margin: 0 10px;">📱 QR Scanner</a> |
+          <a href="/records/" style="color: #10b981; text-decoration: none; margin: 0 10px;">📊 View Records</a> |
+          <a href="/download-excel/" style="color: #10b981; text-decoration: none; margin: 0 10px;">📥 Download Excel</a>
+        </div>
+
+        <h3>Student QR Card - {{ name }}</h3>
+
+        <div class="info-grid">
+          <div class="info-row">
+            <span class="label">Name:</span>
+            <span class="value">{{ name }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Department:</span>
+            <span class="value">{{ department }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Year:</span>
+            <span class="value">{{ year }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Date:</span>
+            <span class="value">{% if date %}{{ date }}{% else %}<span class="muted">—</span>{% endif %}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">In Time:</span>
+            <span class="value muted">{{ in_time }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Out Time:</span>
+            <span class="value muted">{{ out_time }}</span>
+          </div>
+        </div>
+
+        <div class="qr-section">
+          {% if qr_b64 %}
+            <div class="qr">
+              <img alt="QR Code for {{ date }}" src="data:image/png;base64,{{ qr_b64 }}" />
+            </div>
+          {% else %}
+            <div class="placeholder-text">
+              <p>Click "Generate QR Code" to create today's attendance QR code.</p>
+              <p><small>The QR will contain all student details plus the current date.</small></p>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="divider"></div>
+        <div class="footer">
+          <strong>How it works:</strong> Scanning the QR code will show:<br>
+          Name: M.Abinaya<br>
+          Department: Bsc.CS<br>
+          Year: 3rd year<br>
+          Date: Current date (YYYY-MM-DD)
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

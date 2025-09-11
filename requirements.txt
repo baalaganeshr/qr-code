@@ -1,0 +1,7 @@
+Django>=4.2.0
+qrcode[pil]
+pillow
+openpyxl
+pyzbar
+opencv-python-headless
+numpy

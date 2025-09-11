@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Test Instructions</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .step { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .note { background: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; }
+        .success { background: #d4edda; padding: 10px; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; padding: 10px; border-left: 4px solid #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🚀 How to Test Your QR Attendance System</h1>
+    
+    <div class="success">
+        <h3>✅ Your system is running at: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></h3>
+    </div>
+
+    <h2>📋 Step-by-Step Testing Instructions:</h2>
+
+    <div class="step">
+        <h3>Step 1: Generate a QR Code</h3>
+        <ol>
+            <li>Go to <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
+            <li>Click the "Generate QR Code" button</li>
+            <li>A QR code will appear with student information</li>
+            <li>Take a screenshot of this QR code (or use your phone to take a photo)</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Scan the QR Code</h3>
+        <ol>
+            <li>Go to <a href="http://localhost:8000/scanner/" target="_blank">http://localhost:8000/scanner/</a></li>
+            <li><strong>Enter your name</strong> in the "Scanner Name" field (this is who is scanning)</li>
+            <li>Optionally enter a location (e.g., "Main Office", "Front Desk")</li>
+            <li>Click "Choose File" and select your QR code screenshot</li>
+            <li>Click "🔍 Scan QR Code"</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: View Results</h3>
+        <ol>
+            <li>After scanning, you should see success message with student and scanner info</li>
+            <li>Go to <a href="http://localhost:8000/records/" target="_blank">http://localhost:8000/records/</a> to see all records</li>
+            <li>Click <a href="http://localhost:8000/download-excel/" target="_blank">Download Excel</a> to get the Excel file</li>
+        </ol>
+    </div>
+
+    <div class="note">
+        <h3>🔍 What Should Happen:</h3>
+        <ul>
+            <li><strong>Student Info:</strong> Name: M.Abinaya, Department: Bsc.CS, Year: 3rd year</li>
+            <li><strong>Scanner Info:</strong> Your name + location + current date/time</li>
+            <li><strong>Excel File:</strong> Downloads automatically with all the information</li>
+        </ul>
+    </div>
+
+    <div class="note">
+        <h3>🎯 Quick Navigation:</h3>
+        <ul>
+            <li><a href="http://localhost:8000" target="_blank">🏠 Home (QR Generator)</a></li>
+            <li><a href="http://localhost:8000/scanner/" target="_blank">📱 QR Scanner</a></li>
+            <li><a href="http://localhost:8000/records/" target="_blank">📊 View Records</a></li>
+            <li><a href="http://localhost:8000/download-excel/" target="_blank">📥 Download Excel</a></li>
+        </ul>
+    </div>
+
+    <div class="error">
+        <h3>❗ Important Notes:</h3>
+        <ul>
+            <li><strong>Scanner Name is Required:</strong> You must enter your name before scanning</li>
+            <li><strong>Clear Images:</strong> Make sure QR code is clear and not blurry</li>
+            <li><strong>One Scan Per Day:</strong> Each student can only be scanned once per day</li>
+        </ul>
+    </div>
+
+</body>
+</html>
